@@ -1,14 +1,9 @@
-/**
- * DIAGNOSTIC COMMERCE - LOGIQUE APPLICATIVE INTERACTIVE
- * Conçu pour fonctionner 100% côté client (aucun serveur, zéro fuite de données, ultra-rapide).
- */
-
 document.addEventListener("DOMContentLoaded", () => {
-  // ================= DONNÉES DU QUESTIONNAIRE (7 QUESTIONS) =================
   const questions = [
     {
       id: 1,
-      category: "💰 Caisse & Ventes",
+      categoryIcon: "fa-solid fa-cash-register",
+      category: "Caisse & Ventes",
       title: "À la fermeture, comment sais-tu si le montant en caisse correspond exactement à tes ventes du jour ?",
       hint: "Un écart de caisse non repéré au quotidien peut représenter une grosse somme à la fin du mois.",
       options: [
@@ -34,7 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 2,
-      category: "📦 Stocks & Réassorts",
+      categoryIcon: "fa-solid fa-boxes-stacked",
+      category: "Stocks & Réassorts",
       title: "Comment sais-tu qu'un article commence à manquer dans tes rayons ou ta réserve ?",
       hint: "Une rupture de stock, c'est un client déçu qui part directement acheter chez ton voisin.",
       options: [
@@ -60,7 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 3,
-      category: "📒 Crédits & Dettes clients",
+      categoryIcon: "fa-solid fa-book-bookmark",
+      category: "Crédits & Dettes clients",
       title: "Si des clients réguliers prennent des articles à crédit (payer plus tard), comment gères-tu cela ?",
       hint: "L'argent bloqué dehors chez les clients est l'une des causes principales des difficultés de trésorerie.",
       options: [
@@ -86,7 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 4,
-      category: "💳 Séparation des finances",
+      categoryIcon: "fa-solid fa-wallet",
+      category: "Séparation des finances",
       title: "En cas d'urgence personnelle ou familiale, que fais-tu de l'argent de la caisse du commerce ?",
       hint: "Mélanger la poche personnelle et la caisse du commerce fausse la visibilité sur la santé réelle de l'activité.",
       options: [
@@ -112,7 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 5,
-      category: "📈 Bénéfice réel",
+      categoryIcon: "fa-solid fa-chart-line",
+      category: "Bénéfice réel",
       title: "Sais-tu exactement quel a été ton bénéfice net réel le mois dernier ?",
       hint: "Avoir de l'argent qui circule ne signifie pas forcément que le commerce génère un vrai profit.",
       options: [
@@ -138,7 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 6,
-      category: "📦 Pertes & Invendus",
+      categoryIcon: "fa-solid fa-box-open",
+      category: "Pertes & Invendus",
       title: "Comment gères-tu les produits abîmés, périmés ou cassés dans ton commerce ?",
       hint: "Les pertes non quantifiées réduisent silencieusement la rentabilité sans qu'on s'en aperçoive.",
       options: [
@@ -164,7 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 7,
-      category: "🤝 Délégation & Sérénité",
+      categoryIcon: "fa-solid fa-handshake",
+      category: "Délégation & Sérénité",
       title: "Si tu dois t'absenter pendant 3 jours, peux-tu confier ton commerce sereinement ?",
       hint: "Un commerce solide doit pouvoir fonctionner sans obliger le propriétaire à rester enchaîné au comptoir.",
       options: [
@@ -190,11 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  // ================= ÉTAT DE L'APPLICATION =================
   let currentQuestionIndex = 0;
   let userAnswers = []; // Stocke les réponses : { questionId, points, category, optionIndex }
 
-  // ================= ÉLÉMENTS DU DOM =================
   const screenWelcome = document.getElementById("screen-welcome");
   const screenQuiz = document.getElementById("screen-quiz");
   const screenLoading = document.getElementById("screen-loading");
@@ -221,14 +220,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnShareWhatsapp = document.getElementById("btn-share-whatsapp");
   const btnRestart = document.getElementById("btn-restart");
 
-  // ================= NAVIGATION ENTRE ÉCRANS =================
   function showScreen(screen) {
     [screenWelcome, screenQuiz, screenLoading, screenResult].forEach(s => s.classList.remove("active"));
     screen.classList.add("active");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // Démarrer le quiz
   btnStart.addEventListener("click", () => {
     currentQuestionIndex = 0;
     userAnswers = [];
@@ -236,46 +233,38 @@ document.addEventListener("DOMContentLoaded", () => {
     renderQuestion(currentQuestionIndex);
   });
 
-  // Recommencer le test
   btnRestart.addEventListener("click", () => {
     currentQuestionIndex = 0;
     userAnswers = [];
     showScreen(screenWelcome);
   });
 
-  // Bouton retour question précédente
   btnPrev.addEventListener("click", () => {
     if (currentQuestionIndex > 0) {
       currentQuestionIndex--;
-      userAnswers.pop(); // Retire la dernière réponse
+      userAnswers.pop();
       renderQuestion(currentQuestionIndex);
     } else {
       showScreen(screenWelcome);
     }
   });
 
-  // ================= AFFICHAGE D'UNE QUESTION =================
   function renderQuestion(index) {
     const q = questions[index];
     const totalQuestions = questions.length;
 
-    // Mise à jour de la topbar & barre de progression
     quizStepLabel.textContent = `Question ${index + 1} sur ${totalQuestions}`;
     const progressPercent = Math.round(((index + 1) / totalQuestions) * 100);
     progressBar.style.width = `${progressPercent}%`;
 
-    // Visibilité du bouton retour
     btnPrev.style.visibility = index === 0 ? "hidden" : "visible";
 
-    // Textes
-    questionCategory.textContent = q.category;
+    questionCategory.innerHTML = `<i class="${q.categoryIcon}"></i> <span>${q.category}</span>`;
     questionTitle.textContent = q.title;
     questionHint.textContent = q.hint || "";
 
-    // Vider les anciennes options
     answersContainer.innerHTML = "";
 
-    // Injecter les options cliquables
     q.options.forEach((opt, optIdx) => {
       const btnOpt = document.createElement("button");
       btnOpt.className = "answer-option";
@@ -293,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= GESTION DU CLIC SUR UNE OPTION =================
   function handleAnswer(question, selectedOption, optionIndex) {
     userAnswers.push({
       questionId: question.id,
@@ -306,12 +294,10 @@ document.addEventListener("DOMContentLoaded", () => {
       currentQuestionIndex++;
       renderQuestion(currentQuestionIndex);
     } else {
-      // Toutes les questions ont été répondues -> Écran d'analyse
       processResults();
     }
   }
 
-  // ================= TRAITEMENT & ANIMATION DE CHARGEMENT =================
   function processResults() {
     showScreen(screenLoading);
 
@@ -334,28 +320,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 450);
   }
 
-  // ================= CALCUL DU SCORE & AFFICHAGE FINAL =================
   function renderFinalResult() {
     showScreen(screenResult);
 
-    // Calcul du score total (sur 70 max ramené à 100)
     const rawScore = userAnswers.reduce((sum, item) => sum + item.points, 0);
     const maxScore = questions.length * 10; // 70
     const finalPercent = Math.round((rawScore / maxScore) * 100);
 
-    // Animation du score chiffré
     animateScoreCounter(finalPercent);
 
-    // Animation du cercle SVG (circonférence = 2 * PI * 50 ≈ 314.15)
     const circumference = 314.15;
     const offset = circumference - (finalPercent / 100) * circumference;
     scoreCircleIndicator.style.strokeDashoffset = offset;
 
-    // Détermination du profil & des recommandations
+    // Détermination du profil & des recommandations (avec icônes Font Awesome)
     let profileData = {};
     if (finalPercent < 45) {
       profileData = {
         tag: "Gestion au jour le jour",
+        profileIcon: "fa-solid fa-compass",
         tagColor: "#ef4444",
         tagBg: "#fee2e2",
         circleColor: "#ef4444",
@@ -364,15 +347,15 @@ document.addEventListener("DOMContentLoaded", () => {
         summaryDesc: "Tu portes beaucoup sur tes épaules, mais ton commerce subit des fuites silencieuses.",
         points: [
           {
-            icon: "⚠️",
+            icon: '<i class="fa-solid fa-triangle-exclamation icon-danger"></i>',
             text: "<strong>Angles morts sur la caisse :</strong> Sans enregistrement instantané de chaque mouvement, des sommes significatives peuvent disparaître sans explication."
           },
           {
-            icon: "📉",
+            icon: '<i class="fa-solid fa-arrow-trend-down icon-danger"></i>',
             text: "<strong>Argent dehors non sécurisé :</strong> Les dettes confiées à la mémoire ou à des carnets dispersés sont rarement recouvrées à 100%."
           },
           {
-            icon: "📦",
+            icon: '<i class="fa-solid fa-boxes-stacked icon-danger"></i>',
             text: "<strong>Stocks imprévisibles :</strong> Découvrir les ruptures au moment où le client demande le produit fait perdre des ventes directes."
           }
         ]
@@ -380,6 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (finalPercent <= 75) {
       profileData = {
         tag: "Gestion intermédiaire",
+        profileIcon: "fa-solid fa-scale-balanced",
         tagColor: "#d97706",
         tagBg: "#fef3c7",
         circleColor: "#f59e0b",
@@ -388,15 +372,15 @@ document.addEventListener("DOMContentLoaded", () => {
         summaryDesc: "Tu es travailleur et attentif, mais tes méthodes manuelles te font perdre un temps précieux.",
         points: [
           {
-            icon: "⏱️",
+            icon: '<i class="fa-solid fa-clock icon-warning"></i>',
             text: "<strong>Perte de temps sur les carnets :</strong> Recompter la caisse et vérifier les dettes sur papier prend 45 min à 1h chaque jour qui pourraient servir à vendre."
           },
           {
-            icon: "🔍",
+            icon: '<i class="fa-solid fa-magnifying-glass icon-warning"></i>',
             text: "<strong>Anticipation des réassorts :</strong> Tu évites les gros pièges, mais des produits dorment parfois en réserve pendant que d'autres manquent."
           },
           {
-            icon: "💡",
+            icon: '<i class="fa-solid fa-lightbulb icon-warning"></i>',
             text: "<strong>Difficulté à déléguer :</strong> Tu dois encore trop vérifier derrière les autres pour avoir l'esprit tranquille quand tu t'absentes."
           }
         ]
@@ -404,6 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       profileData = {
         tag: "Gestion maîtrisée",
+        profileIcon: "fa-solid fa-award",
         tagColor: "#059669",
         tagBg: "#dcfce7",
         circleColor: "#10b981",
@@ -412,23 +397,22 @@ document.addEventListener("DOMContentLoaded", () => {
         summaryDesc: "Tu possèdes la discipline des commerçants qui réussissent sur la durée.",
         points: [
           {
-            icon: "🎯",
+            icon: '<i class="fa-solid fa-bullseye icon-success"></i>',
             text: "<strong>Rigueur remarquable :</strong> Tu distingues clairement la trésorerie personnelle de celle du magasin et gardes l'œil ouvert."
           },
           {
-            icon: "🚀",
+            icon: '<i class="fa-solid fa-rocket icon-success"></i>',
             text: "<strong>Prêt pour la vitesse supérieure :</strong> Avec une telle discipline, un outil numérique te permettrait de piloter plusieurs boutiques ou d'augmenter tes marges."
           },
           {
-            icon: "📊",
+            icon: '<i class="fa-solid fa-chart-pie icon-success"></i>',
             text: "<strong>Gain de sérénité :</strong> Tu as les bons réflexes pour déléguer sans crainte et sécuriser ton investissement."
           }
         ]
       };
     }
 
-    // Application du profil dans le DOM
-    resultProfileTag.textContent = profileData.tag;
+    resultProfileTag.innerHTML = `<i class="${profileData.profileIcon}"></i> <span>${profileData.tag}</span>`;
     resultProfileTag.style.color = profileData.tagColor;
     resultProfileTag.style.backgroundColor = profileData.tagBg;
     scoreCircleIndicator.style.stroke = profileData.circleColor;
@@ -437,7 +421,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resultSummaryLabel.textContent = profileData.summaryLabel;
     resultSummaryDesc.textContent = profileData.summaryDesc;
 
-    // Rendu des points d'analyse
     diagnosisPoints.innerHTML = "";
     profileData.points.forEach(item => {
       const row = document.createElement("div");
@@ -449,11 +432,9 @@ document.addEventListener("DOMContentLoaded", () => {
       diagnosisPoints.appendChild(row);
     });
 
-    // Configuration du partage WhatsApp
     setupWhatsappShare(finalPercent, profileData.title);
   }
 
-  // ================= ANIMATION COMPTEUR DU SCORE =================
   function animateScoreCounter(targetScore) {
     let current = 0;
     const duration = 1000;
@@ -472,10 +453,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, stepTime);
   }
 
-  // ================= CONFIGURATION DU PARTAGE WHATSAPP =================
   function setupWhatsappShare(score, title) {
     const siteUrl = window.location.href.split('#')[0];
-    const message = `J'ai fait le diagnostic de gestion de mon commerce : j'ai obtenu ${score}% (${title}) ! 📊 Et toi, comment gères-tu tes stocks et ta caisse ? Fais le test rapide ici : ${siteUrl}`;
+    const message = `J'ai fait le diagnostic de gestion de mon commerce : j'ai obtenu ${score}% (${title}) ! Et toi, comment gères-tu tes stocks et ta caisse ? Fais le test rapide ici : ${siteUrl}`;
     const encoded = encodeURIComponent(message);
     btnShareWhatsapp.onclick = () => {
       window.open(`https://wa.me/?text=${encoded}`, "_blank");
