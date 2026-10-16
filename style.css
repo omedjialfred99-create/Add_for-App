@@ -1,8 +1,3 @@
-/* ==========================================================================
-   DIAGNOSTIC COMMERCE - STYLES MODERNES & RESPONSIVE MOBILE-FIRST
-   AVEC ICÔNES FONT AWESOME 6
-   ========================================================================== */
-
 :root {
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
@@ -47,7 +42,8 @@
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-page);
+  background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 35%, #eef2ff 70%, #f0fdf4 100%);
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -56,9 +52,247 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 16px 12px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* CONTAINER PRINCIPAL */
+
+.bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0.7;
+  will-change: transform;
+}
+
+.glow-1 {
+  width: 460px;
+  height: 460px;
+  top: -120px;
+  left: -100px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.45) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(37, 99, 235, 0) 75%);
+  animation: glow-float-1 22s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+  width: 500px;
+  height: 500px;
+  bottom: -140px;
+  right: -120px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(37, 99, 235, 0.25) 50%, rgba(29, 78, 216, 0) 75%);
+  animation: glow-float-2 26s ease-in-out infinite alternate;
+}
+
+.glow-3 {
+  width: 360px;
+  height: 360px;
+  top: 40%;
+  right: -80px;
+  background: radial-gradient(circle, rgba(147, 197, 253, 0.35) 0%, rgba(99, 102, 241, 0.2) 50%, rgba(37, 99, 235, 0) 70%);
+  animation: glow-float-3 18s ease-in-out infinite alternate;
+}
+
+@keyframes glow-float-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 80px) scale(1.1); }
+  100% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+@keyframes glow-float-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-80px, -60px) scale(1.12); }
+  100% { transform: translate(40px, -30px) scale(0.9); }
+}
+
+@keyframes glow-float-3 {
+  0% { transform: translate(0, 0) scale(0.95); }
+  50% { transform: translate(-50px, 60px) scale(1.08); }
+  100% { transform: translate(30px, -50px) scale(1); }
+}
+
+/* Bulles bleues liquides et transparentes */
+.floating-bubble {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at 35% 30%,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(191, 219, 254, 0.7) 22%,
+    rgba(96, 165, 250, 0.45) 52%,
+    rgba(37, 99, 235, 0.25) 80%,
+    rgba(29, 78, 216, 0.35) 100%
+  );
+  box-shadow: 
+    0 10px 30px -5px rgba(37, 99, 235, 0.22),
+    inset 0 3px 8px rgba(255, 255, 255, 0.95),
+    inset 0 -4px 10px rgba(30, 64, 175, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+  will-change: transform, opacity;
+}
+
+/* Reflet 3D réaliste */
+.floating-bubble::after {
+  content: '';
+  position: absolute;
+  top: 18%;
+  left: 22%;
+  width: 25%;
+  height: 18%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  transform: rotate(-35deg);
+  filter: blur(0.5px);
+}
+
+/* Positions et animations individuelles des 10 bulles */
+.bubble-1 {
+  width: 80px;
+  height: 80px;
+  left: 6%;
+  bottom: -90px;
+  animation: bubble-orbit-1 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.bubble-2 {
+  width: 125px;
+  height: 125px;
+  right: 8%;
+  top: 10%;
+  animation: bubble-orbit-2 22s ease-in-out infinite;
+}
+
+.bubble-3 {
+  width: 48px;
+  height: 48px;
+  left: 14%;
+  top: 32%;
+  animation: bubble-orbit-3 13s ease-in-out infinite;
+}
+
+.bubble-4 {
+  width: 95px;
+  height: 95px;
+  right: 18%;
+  bottom: 12%;
+  animation: bubble-orbit-4 19s ease-in-out infinite;
+}
+
+.bubble-5 {
+  width: 38px;
+  height: 38px;
+  left: 48%;
+  bottom: -50px;
+  animation: bubble-rise-1 12s linear infinite;
+  animation-delay: 2s;
+}
+
+.bubble-6 {
+  width: 65px;
+  height: 65px;
+  right: 4%;
+  top: 60%;
+  animation: bubble-orbit-1 17s ease-in-out infinite reverse;
+  animation-delay: 3s;
+}
+
+.bubble-7 {
+  width: 110px;
+  height: 110px;
+  left: -35px;
+  top: 65%;
+  animation: bubble-orbit-2 24s ease-in-out infinite;
+  animation-delay: 5s;
+}
+
+.bubble-8 {
+  width: 52px;
+  height: 52px;
+  left: 30%;
+  bottom: -60px;
+  animation: bubble-rise-2 15s linear infinite;
+  animation-delay: 6s;
+}
+
+.bubble-9 {
+  width: 32px;
+  height: 32px;
+  right: 32%;
+  top: 18%;
+  animation: bubble-orbit-3 11s ease-in-out infinite reverse;
+  animation-delay: 1.5s;
+}
+
+.bubble-10 {
+  width: 85px;
+  height: 85px;
+  right: 28%;
+  top: 45%;
+  animation: bubble-orbit-4 18s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+/* Trajectoires d'animations fluides */
+@keyframes bubble-orbit-1 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.75; }
+  25% { transform: translate(45px, -65px) scale(1.08) rotate(90deg); opacity: 0.9; }
+  50% { transform: translate(95px, -20px) scale(0.95) rotate(180deg); opacity: 0.7; }
+  75% { transform: translate(50px, 45px) scale(1.04) rotate(270deg); opacity: 0.85; }
+  100% { transform: translate(0, 0) scale(1) rotate(360deg); opacity: 0.75; }
+}
+
+@keyframes bubble-orbit-2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  30% { transform: translate(-75px, 50px) scale(0.92); opacity: 0.65; }
+  65% { transform: translate(-40px, 115px) scale(1.06); opacity: 0.85; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+}
+
+@keyframes bubble-orbit-3 {
+  0% { transform: translate(0, 0) scale(0.9); opacity: 0.7; }
+  35% { transform: translate(55px, -45px) scale(1.1); opacity: 0.9; }
+  70% { transform: translate(-30px, -70px) scale(1); opacity: 0.75; }
+  100% { transform: translate(0, 0) scale(0.9); opacity: 0.7; }
+}
+
+@keyframes bubble-orbit-4 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  40% { transform: translate(65px, 75px) scale(1.07); opacity: 0.88; }
+  80% { transform: translate(-50px, 45px) scale(0.94); opacity: 0.72; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+}
+
+@keyframes bubble-rise-1 {
+  0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+  15% { opacity: 0.8; }
+  50% { transform: translateY(-50vh) translateX(35px) scale(1.05); opacity: 0.85; }
+  85% { opacity: 0.75; }
+  100% { transform: translateY(-115vh) translateX(-25px) scale(1.1); opacity: 0; }
+}
+
+@keyframes bubble-rise-2 {
+  0% { transform: translateY(0) translateX(0) scale(0.9); opacity: 0; }
+  20% { opacity: 0.85; }
+  55% { transform: translateY(-55vh) translateX(-45px) scale(1); opacity: 0.9; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(-120vh) translateX(30px) scale(1.15); opacity: 0; }
+}
+
+/* ==========================================================================
+   CONTAINER PRINCIPAL & GLASSMORPHISM
+   ========================================================================== */
 .app-container {
   width: 100%;
   max-width: 520px;
@@ -66,6 +300,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 32px);
+  position: relative;
+  z-index: 2;
 }
 
 /* HEADER */
@@ -79,11 +315,13 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   padding: 6px 16px;
   border-radius: var(--radius-full);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
 }
 
 .brand-badge .brand-text i {
@@ -115,13 +353,18 @@ body {
   align-items: center;
 }
 
-/* CARTE PRINCIPALE */
+/* CARTE PRINCIPALE (EFFET VERRE DÉPOLI / GLASSMORPHISM) */
 .card-wrapper {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-lg);
   padding: 24px 20px;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 
+    0 20px 45px -10px rgba(37, 99, 235, 0.12),
+    0 10px 20px -5px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
   position: relative;
   overflow: hidden;
   flex: 1;
