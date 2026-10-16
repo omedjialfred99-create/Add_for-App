@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Diagnostic Gestion Commerce | Es-tu prêt à mieux gérer ton commerce ?</title>
+  <meta name="description" content="Évalue la santé de ta gestion de commerce en 7 questions rapides. Découvre tes forces et tes opportunités d'amélioration.">
+  
+  <!-- Polices Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="brand-badge">
+        <span class="pulse-dot"></span>
+        <span class="brand-text">Diagnostic Express Commerce</span>
+      </div>
+    </header>
+
+    <!-- MAIN CARD -->
+    <main class="card-wrapper">
+      
+      <!-- ================= ÉCRAN 1 : ACCUEIL ================= -->
+      <section id="screen-welcome" class="screen active">
+        <div class="hero-badge">⚡ Test 100% gratuit & anonyme</div>
+        <h1 class="hero-title">Es-tu prêt à <span class="highlight">mieux gérer</span> ton commerce ?</h1>
+        <p class="hero-subtitle">
+          7 questions concrètes. Moins de 2 minutes. Un regard neuf et sans filtre sur tes stocks, ta caisse et tes vrais bénéfices.
+        </p>
+
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <span class="benefit-icon">📦</span>
+            <div>
+              <strong>Stocks & Ruptures</strong>
+              <p>Identifie les produits qui dorment ou manquent</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-icon">💰</span>
+            <div>
+              <strong>Caisse & Fuites</strong>
+              <p>Repère les écarts et dépenses non suivies</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-icon">📒</span>
+            <div>
+              <strong>Dettes & Crédits</strong>
+              <p>Sécurise l'argent qui dort chez tes clients</p>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-start" class="btn btn-primary btn-block btn-lg">
+          Faire le test maintenant
+          <svg class="icon-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+
+        <p class="privacy-note">🔒 Aucune inscription requise • Vos réponses restent sur votre appareil</p>
+      </section>
+
+      <!-- ================= ÉCRAN 2 : QUESTIONNAIRE ================= -->
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-topbar">
+          <button id="btn-prev-question" class="btn-text-nav" aria-label="Question précédente">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Retour
+          </button>
+          <span id="quiz-step-label" class="step-counter">Question 1 sur 7</span>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-track">
+          <div id="progress-bar" class="progress-fill" style="width: 14%;"></div>
+        </div>
+
+        <div class="question-header">
+          <span id="question-category" class="category-pill">📦 Stocks</span>
+          <h2 id="question-title" class="question-text">Chargement de la question...</h2>
+          <p id="question-hint" class="question-hint"></p>
+        </div>
+
+        <!-- Options Container -->
+        <div id="answers-container" class="answers-stack">
+          <!-- Les options seront injectées dynamiquement par JS -->
+        </div>
+      </section>
+
+      <!-- ================= ÉCRAN 3 : CHARGEMENT / ANALYSE ================= -->
+      <section id="screen-loading" class="screen">
+        <div class="loading-content">
+          <div class="spinner-ring">
+            <div></div><div></div><div></div><div></div>
+          </div>
+          <h2 class="loading-title">Analyse de tes réponses...</h2>
+          <p id="loading-status-text" class="loading-subtitle">Évaluation de la gestion des stocks...</p>
+        </div>
+      </section>
+
+      <!-- ================= ÉCRAN 4 : RÉSULTAT ================= -->
+      <section id="screen-result" class="screen">
+        <div class="result-badge-container">
+          <span id="result-profile-tag" class="result-tag">Profil Commerçant</span>
+        </div>
+
+        <h2 id="result-title" class="result-headline">Ton bilan personnalisé</h2>
+
+        <!-- Score Ring Card -->
+        <div class="score-card">
+          <div class="score-visual">
+            <svg class="score-svg" viewBox="0 0 120 120">
+              <circle class="score-bg-circle" cx="60" cy="60" r="50"></circle>
+              <circle id="score-circle-indicator" class="score-prog-circle" cx="60" cy="60" r="50"></circle>
+            </svg>
+            <div class="score-text-overlay">
+              <span id="result-score-number" class="score-num">0</span>
+              <span class="score-max">/100</span>
+            </div>
+          </div>
+          <div class="score-meta">
+            <strong id="result-summary-label">Indice de Maîtrise</strong>
+            <p id="result-summary-desc">Calculé selon tes 7 habitudes de gestion clés.</p>
+          </div>
+        </div>
+
+        <!-- Diagnostic Feedback Card -->
+        <div class="diagnosis-box">
+          <div class="diagnosis-header">
+            <span class="diag-icon">💡</span>
+            <h3>Ce que révèle ton test :</h3>
+          </div>
+          <div id="diagnosis-points" class="diagnosis-list">
+            <!-- Points d'analyse injectés par JS -->
+          </div>
+        </div>
+
+        <!-- CTA SECTION : Découverte GetAzica -->
+        <div class="promo-card">
+          <div class="promo-pill">🚀 Solution recommandée</div>
+          <h3 class="promo-title">Tu souhaites simplifier cette gestion sans te prendre la tête ?</h3>
+          <p class="promo-text">
+            Découvre <strong>GetAzica</strong> : l'outil pensé pour aider les commerçants à suivre leurs stocks en temps réel, enregistrer chaque vente et maîtriser leurs crédits clients sans carnet papier.
+          </p>
+          
+          <ul class="promo-bullets">
+            <li>✅ Suivi instantané des ventes et de la caisse</li>
+            <li>✅ Alertes avant les ruptures de stock</li>
+            <li>✅ Zéro crédit oublié : relance tes clients à temps</li>
+          </ul>
+
+          <a id="cta-getazica-btn" href="https://getazica.com" target="_blank" rel="noopener noreferrer" class="btn btn-cta btn-block">
+            Découvrir GetAzica gratuitement
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+        </div>
+
+        <!-- Partage & Action secondaire -->
+        <div class="secondary-actions">
+          <button id="btn-share-whatsapp" class="btn btn-secondary btn-block">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.599 2.679-.702c.971.532 1.77.813 2.779.813 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.797-5.765-5.797zm7.411 5.766c-.002 4.09-3.328 7.416-7.41 7.416-1.282 0-2.483-.327-3.528-.9l-4.504 1.182 1.205-4.39c-.663-1.096-1.042-2.385-1.041-3.308.002-4.089 3.328-7.414 7.41-7.414 4.09.001 7.41 3.325 7.41 7.414z"/></svg>
+            Défier un ami commerçant sur WhatsApp
+          </button>
+          
+          <button id="btn-restart" class="btn-link">
+            🔄 Recommencer le test
+          </button>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <p>© Diagnostic indépendant pour commerçants • Outil d'auto-évaluation pratique</p>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
